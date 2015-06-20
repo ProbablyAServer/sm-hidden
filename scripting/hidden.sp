@@ -50,47 +50,47 @@
 
 #define PLAYER_FIRSTBLOOD (1 << 11)
 
-public Plugin:myinfo = {
+public Plugin myinfo = {
     name = PLUGIN_NAME,
     author = PLUGIN_AUTHOR,
     description = PLUGIN_DESCRIPTION,
     version = PLUGIN_VERSION,
     url = PLUGIN_URL
-}
+};
 
 
-new hidden=0;
-new hiddenHp;
-new hiddenHpMax;
-new bool:hiddenStick;
-new Float:hiddenStamina;
-new Float:hiddenInvisibility;
-new Float:hiddenVisible;
-new Float:hiddenJump;
-new bool:hiddenAway;
-new Float:hiddenAwayTime;
-new TFClassType:g_hiddenSavedClass=TFClass_Unknown;
-new TFClassType:g_lastHiddenSavedClass=TFClass_Unknown;
-new g_lastHidden=0;
+int hidden = 0;
+int hiddenHp;
+int hiddenHpMax;
+bool hiddenStick;
+float hiddenStamina;
+float hiddenInvisibility;
+float hiddenVisible;
+float hiddenJump;
+bool hiddenAway;
+float hiddenAwayTime;
+TFClassType g_hiddenSavedClass = TFClass_Unknown;
+TFClassType g_lastHiddenSavedClass = TFClass_Unknown;
+int g_lastHidden=0;
 #if defined HIDDEN_BOO
-    new Float:hiddenBoo;
+    float hiddenBoo;
 #endif
-new bool:newHidden;
-new bool:playing = false; 
-new bool:activated = false; // whether plugin is activated
-new forceNextHidden = 0;
+bool newHidden;
+bool playing = false; 
+bool activated = false; // whether plugin is activated
+int forceNextHidden = 0;
 new Handle:t_disableCps;
 new Handle:t_tick;
-new Handle:cv_enabled; // Internal for sm_hidden_enabled
-new Handle:cv_hidden_alltalk; // Internal for sm_hidden_alltalk
-new Handle:cv_hidden_visible_damage; //Internal for sm_hidden_visible_damage
-new Handle:cv_hidden_visible_jarate; //Internal for sm_hidden_visible_jarate
-new Handle:cv_hidden_visible_pounce; //Internal for sm_hidden_visible_pounce
-new Handle:cv_allowpyro;
-new Handle:cv_allowengineer;
+ConVar cv_enabled; // Internal for sm_hidden_enabled
+ConVar cv_hidden_alltalk; // Internal for sm_hidden_alltalk
+ConVar cv_hidden_visible_damage; //Internal for sm_hidden_visible_damage
+ConVar cv_hidden_visible_jarate; //Internal for sm_hidden_visible_jarate
+ConVar cv_hidden_visible_pounce; //Internal for sm_hidden_visible_pounce
+ConVar cv_allowpyro;
+ConVar cv_allowengineer;
 
 #if defined _steamtools_included
-new bool:steamtools = false;
+bool steamtools = false;
 #endif
 
 public APLRes:AskPluginLoad2(Handle:myself, bool:late, String:error[], err_max) {
@@ -321,7 +321,7 @@ public OnGameFrame() {
                 if (hiddenInvisibility<0.0) {
                     hiddenInvisibility=0.0;
                     ForcePlayerSuicide(client);
-                    PrintToChatAll("\x04[%s]\x01 \x03The Hidden\x01 lost his powers!", PLUGIN_NAME);
+                    PrintToChatAll("\x04[%s]\x01 \x03The Hidden\x01 lost their powers!", PLUGIN_NAME);
                     continue;
                 }
             }
@@ -539,7 +539,7 @@ public Action:player_death(Handle:event, const String:name[], bool:dontBroadcast
             if (hiddenHp>hiddenHpMax) {
                 hiddenHp=hiddenHpMax;
             }
-            PrintToChatAll("\x04[%s]\x01 \x03The Hidden\x01 killed \x03%N\x01 and ate his body", PLUGIN_NAME, victim);
+            PrintToChatAll("\x04[%s]\x01 \x03The Hidden\x01 killed \x03%N\x01 and ate their body.", PLUGIN_NAME, victim);
             CreateTimer(0.1, Timer_Dissolve, victim);
         }
     }
